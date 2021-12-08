@@ -1,0 +1,1 @@
+<?php echo e($test); ?><?php /**PATH /Users/alessiopancia/Documents/frameworkV2/views/prova.blade.php ENDPATH**/ ?>

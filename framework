@@ -1,0 +1,56 @@
+<?php
+    require_once __DIR__ . '/vendor/autoload.php';
+    use Classes\routes;
+
+    if($argv[1] == 'server') {
+        shell_exec('php -S localhost:8000');
+    } else if ($argv[1] == 'route:list') {
+        $router = new routes();
+
+        require __DIR__ . '/routes/web.php';
+        require __DIR__ . '/routes/api.php';
+
+        foreach($router::getRoutes() as $route) {
+            if(isset($route['route'])) {
+                echo "-------";
+                for($i = 0; $i <= strlen($route['route']); $i++) {
+                    echo '-';
+                }
+                echo '---------';
+                for($i = 0; $i <= strlen($route['route']); $i++) {
+                    echo '-';
+                }
+                echo PHP_EOL;
+                echo "Route: " . $route['route'] . " | Page: " . $route['page'] .PHP_EOL;
+                echo "-------";
+                for($i = 0; $i <= strlen($route['route']); $i++) {
+                    echo '-';
+                }
+                echo '---------';
+                for($i = 0; $i <= strlen($route['route']); $i++) {
+                    echo '-';
+                }
+                echo PHP_EOL;
+            } else if(isset($route['api'])){
+                echo "-------";
+                for($i = 0; $i < strlen($route['route']); $i++) {
+                    echo '-';
+                }
+                echo '---------';
+                for($i = 0; $i <= strlen($route['route']); $i++) {
+                    echo '-';
+                }
+                echo PHP_EOL;
+                echo "Api: " . $route['api'] . " | Page: " . $route['page'] .PHP_EOL;
+                echo "-------";
+                for($i = 0; $i <= strlen($route['route']); $i++) {
+                    echo '-';
+                }
+                echo '---------';
+                for($i = 0; $i <= strlen($route['route']); $i++) {
+                    echo '-';
+                }
+                echo PHP_EOL;
+            }
+        }
+    }

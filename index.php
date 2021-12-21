@@ -17,7 +17,8 @@
 
     if(isset($page['controller'])) {
         require __DIR__ . "/controllers/$page[controller].php";
-
+        require __DIR__ . '/functions/controller.php';
+        
         $method = $_SERVER['REQUEST_METHOD'];
 
         if(isset($page['function'])) {

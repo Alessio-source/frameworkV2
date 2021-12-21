@@ -6,5 +6,8 @@
         "psr-4": {
             "Classes\\": "classes/"
         }
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^6.0"
     }
 }

@@ -4,7 +4,7 @@ use Classes\controllers;
 class testController implements controllers {
     
     public static function index() {
-        echo 'index';
+        return view('prova', ['test' => 'test2']);
     }
 
     public static function create() {

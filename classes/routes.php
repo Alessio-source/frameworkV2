@@ -43,4 +43,12 @@ class routes
 
     }
 
+    public static function addController($uri, $controller, $function = null) {
+        if($function == null) {
+            array_push(self::$routes, ['controller'=> $controller, 'uri' => $uri]);
+        } else {
+            array_push(self::$routes, ['controller'=> $controller, 'function' => $function, 'uri' => $uri]);
+        }
+    }
+
 }

@@ -15,9 +15,38 @@
 
     $page = $router::getRoute($request);
 
-    if (isset($page['variables'])) {
-        echo $blade->make($page['page'], $page['variables'])->render();
+    if(isset($page['controller'])) {
+        require __DIR__ . "/controllers/$page[controller].php";
+
+        $method = $_SERVER['REQUEST_METHOD'];
+
+        if(isset($page['function'])) {
+            $class = $page['controller'];
+            $function = $page['function'];
+            $class::$function();
+        } else {
+            switch ($method) {
+                case 'GET':
+                    $page['controller']::index();
+                    break;
+                case 'POST':
+                    $page['controller']::create();
+                    break;
+                case 'PUT':
+                    $page['controller']::update();
+                    break;
+                case 'DELETE':
+                    $page['controller']::delete();
+                    break;
+            }
+        }
+
     } else {
-        echo $blade->make($page['page'])->render();
+        if (isset($page['variables'])) {
+            echo $blade->make($page['page'], $page['variables'])->render();
+        } else {
+            echo $blade->make($page['page'])->render();
+        }
     }
 
+    

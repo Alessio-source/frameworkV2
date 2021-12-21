@@ -21,7 +21,7 @@
                     echo '-';
                 }
                 echo PHP_EOL;
-                echo "Route: " . $route['route'] . " | Page: " . $route['page'] .PHP_EOL;
+                echo "Route: $route[route] | Page: $route[page]" .PHP_EOL;
                 echo "-------";
                 for($i = 0; $i <= strlen($route['route']); $i++) {
                     echo '-';
@@ -41,7 +41,7 @@
                     echo '-';
                 }
                 echo PHP_EOL;
-                echo "Api: " . $route['api'] . " | Page: " . $route['page'] .PHP_EOL;
+                echo "Api: $route[api] | Page: $route[page]" .PHP_EOL;
                 echo "-------";
                 for($i = 0; $i <= strlen($route['route']); $i++) {
                     echo '-';
@@ -51,6 +51,58 @@
                     echo '-';
                 }
                 echo PHP_EOL;
+            } else if (isset($route['controller'])) {
+                $functions = isset($route['function']) ? $route['function'] : 'index,create,update,delete';
+                echo "------------";
+                for($i = 0; $i < strlen($route['controller']); $i++) {
+                    echo '-';
+                }
+                echo '--------------';
+                for($i = 0; $i <= strlen($functions); $i++) {
+                    echo '-';
+                }
+                echo PHP_EOL;
+                echo "Route: $route[uri] | Controller: $route[controller] | function: $functions" . PHP_EOL;
+                echo "------------";
+                for($i = 0; $i <= strlen($route['controller']); $i++) {
+                    echo '-';
+                }
+                echo '-------------';
+                for($i = 0; $i <= strlen($functions); $i++) {
+                    echo '-';
+                }
+                echo PHP_EOL;
             }
+        }
+    } else if ($argv[1] == 'controller:make') {
+        if(isset($argv[2])) {
+            $controllerName = $argv[2];
+            $controller = fopen(__DIR__ . "/controllers/$controllerName.php", 'w');
+            $controllerTexts = "<?php
+use Classes\controllers;
+
+class $controllerName implements controllers {
+    
+    public static function index() {
+        
+    }
+
+    public static function create() {
+        
+    }
+
+    public static function update() {
+        
+    }
+
+    public static function delete() {
+        
+    }
+
+}";
+            fwrite($controller, $controllerTexts);
+            fclose($controller);
+        } else {
+            echo 'Error: the correct command is "php framework controller:make {controllerName}"' . PHP_EOL;
         }
     }

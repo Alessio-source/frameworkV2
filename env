@@ -1,6 +1,4 @@
 mysql_ip: localhost;
-mysql_port: 3306;
 mysql_user: root;
 msql_password: root;
 mysql_database: database;
-

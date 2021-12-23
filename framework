@@ -105,4 +105,26 @@ class $controllerName implements controllers {
         } else {
             echo 'Error: the correct command is "php framework controller:make {controllerName}"' . PHP_EOL;
         }
+    } else if ($argv[1] == 'make:model') {
+        if(isset($argv[2])) {
+            
+           $file = fopen(__DIR__ ."/models/$argv[2].php", "w" );
+           $text = "<?php
+namespace Models;
+use Classes\model;
+class $argv[2] extends model {
+    public static " . '$table' . " = '';
+    public static " . '$parameters' . " = [
+        '1',
+        '2',
+        '3',
+    ];
+}
+";
+        fwrite($file, $text);
+        fclose($file);
+
+        } else {
+            echo 'Error: the correct command is "php framework make:model {modelName}"' . PHP_EOL;
+        }
     }

@@ -2,23 +2,34 @@
 
 namespace Classes;
 use Classes\config;
+use PDOException;
 
 class database {
 
     public static $conn = '';
 
     public static function connect() {
-        $hostname = config::getSetting('mysql_ip');
-        $dbname = config::getSetting('mysql_database');
-        $user = config::getSetting('mysql_user');
-        $pass = config::getSetting('msql_password');
-        self::$conn = new \PDO ("mysql:host=$hostname;dbname=$dbname", $user, $pass);
+        try {
+            $hostname = config::getSetting('mysql_ip');
+            $dbname = config::getSetting('mysql_database');
+            $user = config::getSetting('mysql_user');
+            $pass = config::getSetting('msql_password');
+            self::$conn = new \PDO ("mysql:host=$hostname;dbname=$dbname", $user, $pass);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            die;
+        }
     }
 
     public static function query($query) {
-        self::$conn::query($query);
-        self::$conn::execute();
-        return self::$conn::fetch();
+        try {
+            $db = self::$conn->prepare($query);
+            $db->execute();
+            return $db->fetch();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            die;
+        }
     }
 
     public static function close() {

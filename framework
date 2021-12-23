@@ -127,4 +127,68 @@ class $argv[2] extends model {
         } else {
             echo 'Error: the correct command is "php framework make:model {modelName}"' . PHP_EOL;
         }
+    } else if ($argv[1] == 'make:migration') {
+        if(isset($argv[2])) {
+            
+           $file = fopen(__DIR__ ."/migrations/$argv[2].php", "w" );
+           $text = "<?php
+namespace Migrations;
+use Classes\migration;
+class $argv[2] extends migration {
+    public static " . '$table' . " = '';
+    public static " . '$parameters' . " = [
+        '1',
+        '2',
+        '3',
+    ];
+}
+";
+        fwrite($file, $text);
+        fclose($file);
+
+        } else {
+            echo 'Error: the correct command is "php framework make:migration {migrationName}"' . PHP_EOL;
+        }
+    } else if($argv[1] == "migrate") {
+        $files = scandir(__DIR__ . '/migrations');
+        unset($files[0]);
+        unset($files[1]);
+        foreach($files as $file) {
+            $file = explode('.php', $file);
+            $classe = $file[0];
+            $c = "Migrations\\$classe";
+            $c = new $c();
+            $c->createTable();
+        }
+
+        echo 'Migrate import success!' . PHP_EOL;
+    } else if($argv[1] == "migrate:drop") {
+        $files = scandir(__DIR__ . '/migrations');
+        unset($files[0]);
+        unset($files[1]);
+        foreach($files as $file) {
+            $file = explode('.php', $file);
+            $classe = $file[0];
+            $c = "Migrations\\$classe";
+            $c = new $c();
+            $c->deleteTable();
+        }
+
+        echo 'Migrate drop success!' . PHP_EOL;
+    }
+
+    else if($argv[1] == "migrate:fresh") {
+        $files = scandir(__DIR__ . '/migrations');
+        unset($files[0]);
+        unset($files[1]);
+        foreach($files as $file) {
+            $file = explode('.php', $file);
+            $classe = $file[0];
+            $c = "Migrations\\$classe";
+            $c = new $c();
+            $c->deleteTable();
+            $c->createTable();
+        }
+
+        echo 'Migrate fresh success!' . PHP_EOL;
     }

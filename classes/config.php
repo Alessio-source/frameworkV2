@@ -18,4 +18,16 @@ class config {
         }
         return array_key_exists($settingname, $settingsArr) ? $settingsArr[$settingname] : null ;
     }
+
+    public static function generateKey() {
+        $availables = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\|!$%&/()=?^+{}[]#-_';
+        $availableLenght = strlen($availables);
+        $key = '';
+        for ($i = 0; $i < 100; $i++) {
+            $key .= $availables[rand(0, $availableLenght - 1)];
+        }
+        $file = fopen(__DIR__ . "/../env", "a");
+        fwrite($file, PHP_EOL . "key: '$key';");
+        fclose($file);
+    }
 }

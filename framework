@@ -1,6 +1,7 @@
 <?php
     require_once __DIR__ . '/vendor/autoload.php';
     use Classes\routes;
+    use Classes\config;
 
     if($argv[1] == 'server') {
         shell_exec('php -S localhost:8000');
@@ -175,9 +176,7 @@ class $argv[2] extends migration {
         }
 
         echo 'Migrate drop success!' . PHP_EOL;
-    }
-
-    else if($argv[1] == "migrate:fresh") {
+    } else if($argv[1] == "migrate:fresh") {
         $files = scandir(__DIR__ . '/migrations');
         unset($files[0]);
         unset($files[1]);
@@ -191,4 +190,12 @@ class $argv[2] extends migration {
         }
 
         echo 'Migrate fresh success!' . PHP_EOL;
+    } else if ($argv[1] == "key:generate") {
+        $key = config::getSetting("key");
+        if($key == null) {
+            config::generateKey();
+            echo "key generated!";
+        } else {
+            echo "Error: the key alredy exist!";
+        }
     }
